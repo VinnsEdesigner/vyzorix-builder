@@ -1,0 +1,15 @@
+# cppcheck configuration for vyzorix-builder.
+#
+# The suppressions are false positives or deliberate choices:
+#   noExplicitConstructor       private ctors cannot convert externally
+#   normalCheckLevelMaxBranches an analysis-limit notice, not a defect
+#   useStlAlgorithm             raw loops are clearer here than std::transform
+#   passedByValue               the config is moved into the store by design
+enable=warning,performance,portability
+inline-suppr
+std=c++17
+error-exitcode=1
+suppress=noExplicitConstructor
+suppress=normalCheckLevelMaxBranches
+suppress=useStlAlgorithm
+suppress=passedByValue

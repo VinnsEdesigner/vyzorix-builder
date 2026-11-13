@@ -1,0 +1,25 @@
+# Base-image digests (contract R8).
+#
+# Each line pins a base image's tag to its digest, so the same source builds the
+# same bytes on two machines. tooling_embed.py embeds this file into the binary;
+# apply_image_pins rewrites every `FROM <ref>` to `FROM <ref>@<digest>`.
+#
+# An image with no line here stays a floating tag — a documented exception.
+# `--pull` refreshes a base image deliberately.
+#
+# Refresh a pin with:
+#   docker buildx imagetools inspect <image>:<tag> --format '{{.Manifest.Digest}}'
+#
+debian:bookworm = sha256:268fb24c39bca92d326dd83ea3abebe4a3f7751c804ffef23bb6d857dd343ff8
+debian:bookworm-slim = sha256:734a72b3d6142a71993b4bc580ca01d8ca687f77a2c422d96a961d3376b179bc
+golang:1.27-bookworm = sha256:4fa7c968ba93f1635670522dbb01a2c78150443e1385746924566079f36570ea
+rust:1-bookworm = sha256:ade39a710ef85f3506cffcfec3e8a24ba090badef1dff2fb798f71d878833fea
+node:20-bookworm-slim = sha256:2cf067cfed83d5ea958367df9f966191a942351a2df77d6f0193e162b5febfc0
+python:3.11-bookworm = sha256:726d304906fa5eb468e5531e366548d1903286352f5adb54ef508ac01fbd80c6
+ruby:3.3-bookworm = sha256:ae098d019fd2995e6cb82e16a87529348ba26a7c83ad6189937decc2846b0730
+php:8.3-cli-bookworm = sha256:232331112d3a7c5b98edeeddc3b85f610172f99352c0635fe6b3e166e47062cb
+composer:2 = sha256:ca11f643d7791ebdd90a34fc20caf11380d434007ae539a9ea75cd9212e13dca
+oven/bun:1 = sha256:1d22548f177f4ff38e0c15baa3c2c46c6c2060ba2d1bc573bb4720b407548f1d
+denoland/deno:bin-2.1.4 = sha256:1cc7ab514b88a615cde5acf4a6db0baa7dd27fdc9476cf3f4e0671f4cfce29aa
+eclipse-temurin:21-jdk = sha256:0a3f329821dcadf54b2a3033a15e2e9f007069a9db43d7f51897e6b80e726b07
+mcr.microsoft.com/dotnet/sdk:8.0 = sha256:1b955f179b02df4f0eb5fadedaa898cbe44d620a64aab52eec72c8e91d1355b5

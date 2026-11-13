@@ -1,0 +1,52 @@
+# clang-tidy configuration for vyzorix-builder.
+#
+# The set is curated: it keeps the checks that find real problems (bugs, the
+# clang static analyzer, performance, portability) and drops the style-preference
+# checks that fight this codebase's deliberate choices. Every surviving finding
+# is a build failure, so the tree is verifiably clean.
+#
+# Note: a YAML `>` block scalar is literal text, so comments cannot live inside
+# the Checks value. The disable list is written plainly and explained here:
+#   bugprone-easily-swappable-parameters  (target, plan, version) reads fine
+#   readability-implicit-bool-conversion  `if (!result)` is the point of Result
+#   readability-braces-around-statements  single-line `if (x) return;` is used
+#   misc-const-correctness                const-on-locals is noise here
+#   misc-no-recursion                     the JSON/TOML parsers are recursive
+#   misc-include-cleaner                  transitive includes are not a goal
+#   cppcoreguidelines-owning-memory       gsl-specific; this codebase is not gsl
+#   cppcoreguidelines-*-c-arrays          fixed C arrays are intentional
+#   performance-enum-size                 enum size is not a concern here
+Checks: >
+  bugprone-*,
+  clang-analyzer-*,
+  performance-*,
+  portability-*,
+  cppcoreguidelines-init-variables,
+  cppcoreguidelines-pro-type-const-cast,
+  cppcoreguidelines-pro-type-member-init,
+  cppcoreguidelines-virtual-class-destructor,
+  cppcoreguidelines-special-member-functions,
+  modernize-use-emplace,
+  modernize-use-nullptr,
+  modernize-use-override,
+  modernize-return-braced-init-list,
+  misc-definitions-in-headers,
+  misc-misplaced-const,
+  misc-redundant-expression,
+  misc-static-assert,
+  misc-uniqueptr-reset-release,
+  misc-unused-using-decls,
+  -bugprone-easily-swappable-parameters,
+  -readability-implicit-bool-conversion,
+  -readability-braces-around-statements,
+  -misc-const-correctness,
+  -misc-no-recursion,
+  -misc-include-cleaner,
+  -cppcoreguidelines-owning-memory,
+  -cppcoreguidelines-pro-bounds-constant-array-index,
+  -cppcoreguidelines-avoid-c-arrays,
+  -modernize-avoid-c-arrays,
+  -performance-enum-size
+
+WarningsAsErrors: '*'
+HeaderFilterRegex: '.*'
