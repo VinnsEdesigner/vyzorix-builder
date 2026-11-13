@@ -11,7 +11,7 @@ namespace vyzorix::publish {
 // bytes it serves hash to `expected_sha256`. The device fetches with no
 // credential and verifies the digest, so a URL that requires authentication, or
 // one that serves different bytes than the manifest pins, is a refusal here
-// rather than a `digest_mismatch` on the device (contract R13).
+// rather than a `digest_mismatch` on the device.
 //
 // `expected_sha256` is the lowercase hex digest the manifest will pin. An empty
 // value skips the content check (only the status is verified).

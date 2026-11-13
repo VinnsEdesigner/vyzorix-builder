@@ -9,7 +9,7 @@ inline const char* kDockerfile_bookworm = R"DOCKERFILE(# The shared builder base
 #
 # Debian bookworm on purpose: the device rootfs is bookworm (glibc 2.36), and an
 # artifact built on a newer suite links symbols the rootfs does not have — a
-# failure that appears nowhere but on the device (BUILD_TOOL_CONTRACT.md §4.8).
+# failure that appears nowhere but on the device.
 # Every language image is FROM this, so the floor is stated once.
 FROM debian:bookworm
 
@@ -521,8 +521,8 @@ inline const char* bundled_dockerfile(const std::string& lang) {
 
 }  // namespace vyzorix::containerbuild
 
-// kImagePins is builders/pins.txt, embedded (contract R8).
-inline const char* kImagePins = R"PINS(# Base-image digests (contract R8).
+// kImagePins is builders/pins.txt, embedded.
+inline const char* kImagePins = R"PINS(# Base-image digests.
 #
 # Each line pins a base image's tag to its digest, so the same source builds the
 # same bytes on two machines. tooling_embed.py embeds this file into the binary;

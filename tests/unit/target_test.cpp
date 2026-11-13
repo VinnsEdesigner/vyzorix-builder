@@ -39,7 +39,7 @@ VYZ_TEST(target_resolves_all) {
 
 VYZ_TEST(target_suite_selects_the_glibc_floor) {
     // The recipe's `suite` picks the floor the engine asserts; the floor is not a
-    // constant the suite silently ignores (contract R11).
+    // constant the suite silently ignores.
     auto bullseye = resolve_target("arm64-v8a", "bullseye");
     CHECK(bullseye.has_value());
     if (bullseye.has_value()) CHECK_EQ(bullseye.value().libc_floor, "2.31");

@@ -25,7 +25,7 @@ public:
         add_build_arg(plan, "DEB_ARCH", t.debarch);
         add_build_arg(plan, "TARGET_ABI", t.abi);
         // The escape hatch owns its build, so it is the one place the engine
-        // sets --platform (contract R9): a Containerfile that must build *on*
+        // sets --platform: a Containerfile that must build *on*
         // the target architecture (a foreign toolchain, a qemu-emulated build)
         // otherwise cannot request it. A first-class adapter must NOT set it —
         // those cross-compile natively on the host, so forcing the platform would

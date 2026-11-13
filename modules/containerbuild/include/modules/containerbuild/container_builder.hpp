@@ -19,7 +19,7 @@ struct Produced {
 };
 
 // BuildLimits bounds what a build may consume, so a runaway or hostile build
-// cannot hang or exhaust the host (contract R2, R4, R5). Zero means "no bound"
+// cannot hang or exhaust the host. Zero means "no bound"
 // for that field, which is the caller's explicit choice, not a default.
 struct BuildLimits {
     int timeout_seconds = 0;      // wall-clock bound on the docker build
@@ -28,7 +28,7 @@ struct BuildLimits {
     int pids_limit = 0;           // >0 -> docker --pids-limit
     bool pull = false;            // docker build --pull (off by default, R10)
     long long max_artifact_bytes = 0;  // >0 -> refuse an artifact larger than this (R5)
-    // Build-time secret ids (contract R18). Each names an environment variable on
+    // Build-time secret ids. Each names an environment variable on
     // the builder; it becomes a BuildKit `--secret id=<id>,env=<id>`, so the value
     // is read from the environment and never appears in argv or an image layer.
     std::vector<std::string> secret_ids;
@@ -58,7 +58,7 @@ private:
 // context's .dockerignore (keeping any lines the project already had), so the
 // generated Dockerfile and the build output stay out of the context. It returns a
 // RAII handle: destroying it restores the project's own .dockerignore and removes
-// the generated Dockerfile, on success, failure, or an early return (contract R7).
+// the generated Dockerfile, on success, failure, or an early return.
 class ContextScratch {
 public:
     ContextScratch(std::string context_dir, const std::string& dockerfile);

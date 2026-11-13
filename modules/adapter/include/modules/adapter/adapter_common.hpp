@@ -71,7 +71,7 @@ inline void add_build_arg(BuildPlan& plan, const std::string& key, const std::st
 inline constexpr const char* kStagingDir = "/out/stage";
 
 // with_cmd records the artifact's entrypoint on the plan, so the engine can
-// assert it exists in the staged tree (contract R20): a broken `cmd` is caught
+// assert it exists in the staged tree: a broken `cmd` is caught
 // at build time, not discovered when the device tries to start the app.
 inline void with_cmd(BuildPlan& plan, const domain::RecipeArtifact& a) {
     plan.cmd = a.cmd;

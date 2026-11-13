@@ -36,7 +36,7 @@ pins_path = "builders/pins.txt"
 pins = open(pins_path).read() if os.path.exists(pins_path) else ""
 with open(out, "a") as f:
     f.write("\n")
-    f.write("// kImagePins is builders/pins.txt, embedded (contract R8).\n")
+    f.write("// kImagePins is builders/pins.txt, embedded.\n")
     f.write("inline const char* kImagePins = R\"PINS(" + pins + ")PINS\";\n")
 
 print(f"wrote {out} ({len(files)} Dockerfiles, pins {len(pins)} bytes)")

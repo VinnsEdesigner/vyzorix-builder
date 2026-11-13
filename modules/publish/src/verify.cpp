@@ -79,7 +79,7 @@ FetchResult fetch_once(const std::string& curl, const std::string& url, const st
 // token_for performs the registry auth handshake: it reads the WWW-Authenticate
 // challenge, requests the token the challenge names, and returns
 // "Bearer <token>". This is what any OCI client does, and what GHCR requires even
-// for a public blob (contract R13): the device must do the same, or it cannot
+// for a public blob: the device must do the same, or it cannot
 // fetch a GHCR artifact at all.
 std::string token_for(const std::string& curl, const std::string& www_authenticate) {
     auto extract = [&](const std::string& key) {
@@ -132,7 +132,7 @@ okfw::Result<void> verify_anonymous(const std::string& url, const std::string& e
 
     // 2. On a 401, do what every OCI client does: read the challenge, mint the
     //    token, and retry with it. This is the path a device must take too
-    //    (contract R13), so the check mirrors the device rather than assuming a
+    //, so the check mirrors the device rather than assuming a
     //    credentialless 200.
     if (f.ok && f.status == "401") {
         std::string challenge = header_value(headers, "www-authenticate");

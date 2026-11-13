@@ -2,7 +2,7 @@
 //
 // A base image referenced by a floating tag (`rust:1-bookworm`) is not
 // reproducible: the same source can build different bytes on two machines. A pin
-// resolves the tag to a digest, so the build is content-addressed (contract R8).
+// resolves the tag to a digest, so the build is content-addressed.
 //
 // The pins live in builders/pins.txt and are embedded into the binary by
 // tooling_embed.py, so the builder applies them without reading a file at run

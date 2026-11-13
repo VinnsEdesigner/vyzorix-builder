@@ -1,4 +1,4 @@
-# Base-image digests (contract R8).
+# Base-image digests.
 #
 # Each line pins a base image's tag to its digest, so the same source builds the
 # same bytes on two machines. tooling_embed.py embeds this file into the binary;

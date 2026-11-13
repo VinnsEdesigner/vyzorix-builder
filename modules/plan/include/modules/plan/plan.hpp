@@ -29,7 +29,7 @@ struct BuildPlan {
     std::string libc_floor;                     // the glibc floor the engine asserts on a staged tree
     std::string app;                            // the app name, for the entrypoint's device path
     std::string cmd;                            // the entrypoint the engine asserts exists in the artifact
-    std::string platform;                       // e.g. "linux/arm64"; the docker --platform value (contract R9)
+    std::string platform;                       // e.g. "linux/arm64"; the docker --platform value
     std::vector<Output> outputs;                // what to collect
 };
 

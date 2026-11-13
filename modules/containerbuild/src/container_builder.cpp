@@ -26,7 +26,7 @@ std::string sanitize(const std::string& s) {
 
 // DockerCleanup removes the image tag and the container a build created, on every
 // exit path — a normal return, an early refusal, or a cancellation unwinding out
-// of a signal (contract R3). A cancelled build must not leave a container or an
+// of a signal. A cancelled build must not leave a container or an
 // image behind. run_quiet is used because a cleanup failure is not actionable.
 class DockerCleanup {
 public:
@@ -155,20 +155,20 @@ okfw::Result<std::vector<Produced>> ContainerBuilder::run(const plan::BuildPlan&
     cleanup.set_tag(tag);
     std::vector<std::string> build_argv = {"docker", "build", "-t", tag};
 
-    // Build for the target platform, not the host's (contract R9): on a
+    // Build for the target platform, not the host's: on a
     // multi-arch host this is what makes the artifact the right architecture.
     if (!build_plan.platform.empty()) {
         build_argv.emplace_back("--platform");
         build_argv.emplace_back(build_plan.platform);
     }
 
-    // --pull is opt-in (contract R10): off by default so a build is reproducible
+    // --pull is opt-in: off by default so a build is reproducible
     // from the local cache; on, an operator picks up a re-published base image.
     if (limits_.pull) {
         build_argv.emplace_back("--pull");
     }
 
-    // Build-time secrets (contract R18). Each id names an environment variable;
+    // Build-time secrets. Each id names an environment variable;
     // BuildKit reads the value from the environment, so it is never in argv and
     // never in a layer. A missing variable is a refusal, not a silent empty
     // secret that would fail the build confusingly.
@@ -190,7 +190,7 @@ okfw::Result<std::vector<Produced>> ContainerBuilder::run(const plan::BuildPlan&
         build_argv.emplace_back(spec);
     }
 
-    // Resource caps (contract R4): a runaway or hostile build cannot exhaust the
+    // Resource caps: a runaway or hostile build cannot exhaust the
     // host. BuildKit's `docker build` takes these through `--resource`
     // (`memory=4g`, `cpu-quota=…`), not the run-time `--memory`/`--cpus` flags,
     // which `docker build` rejects. Only the caps the caller set are passed.
@@ -211,7 +211,7 @@ okfw::Result<std::vector<Produced>> ContainerBuilder::run(const plan::BuildPlan&
     // A generated Dockerfile is written to the context dir, so the image is
     // self-contained: the binary needs no builders/ directory at run time. The
     // scratch restores the project's own files when the build ends, however it
-    // ends (contract R7).
+    // ends.
     std::optional<ContextScratch> scratch;
     if (!build_plan.containerfile.empty()) {
         build_argv.emplace_back("-f");
@@ -232,7 +232,7 @@ okfw::Result<std::vector<Produced>> ContainerBuilder::run(const plan::BuildPlan&
     build_argv.emplace_back(context_dir);
 
     okfw::info("building image for " + build_plan.outputs.front().name);
-    // A wall-clock bound (contract R2): a wedged build is refused, not left to
+    // A wall-clock bound: a wedged build is refused, not left to
     // hang the builder forever.
     auto built = okfw::run_with_timeout(build_argv, limits_.timeout_seconds);
 
@@ -296,14 +296,14 @@ okfw::Result<std::vector<Produced>> ContainerBuilder::run(const plan::BuildPlan&
             }
         }
 
-        // A build must not fill the host disk (contract R5): refuse an artifact
+        // A build must not fill the host disk: refuse an artifact
         // over the ceiling before it is packed, naming the limit.
         if (auto size_ok = package::assert_under_size_limit(stage, limits_.max_artifact_bytes); !size_ok) {
             std::filesystem::remove_all(stage, stage_ec);
             return okfw::Result<std::vector<Produced>>::fail(size_ok.error());
         }
 
-        // The entrypoint must exist in the artifact (contract R20): a `cmd` the
+        // The entrypoint must exist in the artifact: a `cmd` the
         // device cannot run is the failure class this tool exists to prevent.
         if (auto ep = package::assert_entrypoint(stage, build_plan.app, out.name, build_plan.cmd); !ep) {
             std::filesystem::remove_all(stage, stage_ec);

@@ -68,7 +68,7 @@ private:
 // (curl's own non-zero exit) is a refusal. `config` is an optional credential
 // file the caller has already written.
 //
-// A transport failure (curl exit != 0) is retried with backoff (contract R14):
+// A transport failure (curl exit != 0) is retried with backoff:
 // a connection reset is transient. An HTTP status is not retried here — the
 // caller decides, because only it knows whether the status is on the request.
 okfw::Result<okfw::ProcessOutput> run_curl(const std::vector<std::string>& args, const std::string& config = "") {
@@ -183,7 +183,7 @@ public:
         // The authenticated phase runs under a bearer token. A token can expire
         // between the mint and the push (they are separate HTTP calls), so a 401
         // re-mints the token once and retries, rather than failing a build on a
-        // token that was valid when the build started (contract R15).
+        // token that was valid when the build started.
         auto push_authenticated = [&](const std::string& token) -> okfw::Result<void> {
             CurlAuth auth("header = \"Authorization: Bearer " + token + "\"");
 
@@ -236,7 +236,7 @@ private:
     // here rather than on the device.
     okfw::Result<void> push_blob(const std::string& scope, const std::string& file,
                                  const std::string& hex, const std::string& auth_path) const {
-        // Idempotency (contract R16): a content-addressed store already holding
+        // Idempotency: a content-addressed store already holding
         // this digest is a no-op, not a re-upload. A HEAD on the blob answers 200
         // when it exists, so a re-run of a build is cheap and safe.
         std::string blob_url = "https://" + config_.registry + "/v2/" + scope + "/blobs/sha256:" + hex;

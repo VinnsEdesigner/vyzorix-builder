@@ -31,7 +31,7 @@ namespace vyzorix::package {
 // assert_entrypoint checks that `cmd` names a file inside the staged artifact
 // that is executable. The manifest's `cmd` is what the device runs, so a `cmd`
 // that does not exist in the artifact is a build-time refusal, not a device-time
-// failure (contract R20). A webroot (no `cmd`) is not checked.
+// failure. A webroot (no `cmd`) is not checked.
 //
 // The device unpacks the artifact's tree at `<appsRoot>/<app>/<artifact.name>`
 // (DeployApplier.destinationOf), and `<appsRoot>` is `/home/apps`. So a `cmd` of
@@ -44,7 +44,7 @@ namespace vyzorix::package {
                                                    const std::string& cmd);
 
 // assert_under_size_limit refuses when the total size of the staged tree exceeds
-// `limit_bytes`. A build must not fill the host disk (contract R5): a runaway
+// `limit_bytes`. A build must not fill the host disk: a runaway
 // build is caught here, naming the limit, rather than after it has written a
 // hundred gigabytes. `limit_bytes <= 0` means no limit.
 [[nodiscard]] okfw::Result<void> assert_under_size_limit(const std::string& staging_dir,

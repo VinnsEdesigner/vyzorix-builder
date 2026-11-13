@@ -241,7 +241,7 @@ okfw::Result<std::vector<schema::BuiltArtifact>> build_artifacts(const Request& 
     }
 
     containerbuild::BuildLimits limits;
-    // A generous default bound (contract R2): a real build may take minutes, but
+    // A generous default bound: a real build may take minutes, but
     // no build should hang the builder forever. 0 in the request means "use the
     // default"; a negative value means "no bound" (an explicit operator choice).
     constexpr int kDefaultBuildTimeoutSeconds = 3600;
@@ -258,9 +258,9 @@ okfw::Result<std::vector<schema::BuiltArtifact>> build_artifacts(const Request& 
 
     // The build output lives outside the project: an output dir inside the
     // context would be copied into the next build and break determinism. It is
-    // unique per run, so two builds on one host do not share a scratch dir
-    // (contract R6). The guard removes it on every exit path, success or failure
-    // (contract R5): a build must not leave disk behind.
+    // unique per run, so two builds on one host do not share a scratch dir.
+    // The guard removes it on every exit path, success or failure: a build must
+    // not leave disk behind.
     std::error_code tmp_ec;
     std::filesystem::path out_dir =
         std::filesystem::temp_directory_path(tmp_ec) / ("vyzorix-build-out-" + okfw::run_token());

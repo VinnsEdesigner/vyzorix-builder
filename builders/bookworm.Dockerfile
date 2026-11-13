@@ -2,7 +2,7 @@
 #
 # Debian bookworm on purpose: the device rootfs is bookworm (glibc 2.36), and an
 # artifact built on a newer suite links symbols the rootfs does not have — a
-# failure that appears nowhere but on the device (BUILD_TOOL_CONTRACT.md §4.8).
+# failure that appears nowhere but on the device.
 # Every language image is FROM this, so the floor is stated once.
 FROM debian:bookworm
 

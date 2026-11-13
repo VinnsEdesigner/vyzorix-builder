@@ -9,7 +9,7 @@ using namespace vyzorix;
 
 VYZ_TEST(ids_run_token_is_unique_per_call) {
     // The token names a build's image tag and scratch dir, so two calls in one
-    // process must never collide (contract R6: concurrent builds must not share
+    // process must never collide (concurrent builds must not share
     // a name). A set of many tokens catches a counter that does not advance.
     std::set<std::string> seen;
     for (int i = 0; i < 1000; i++) {

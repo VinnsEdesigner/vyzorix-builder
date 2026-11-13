@@ -3,7 +3,7 @@
 // A registry push, a schema fetch, or an anonymous-fetch check can fail for a
 // reason that is not the request's fault: a connection reset, a 5xx, a 429. Those
 // are worth another attempt; a 401/403/404 is not — retrying a definitive refusal
-// only wastes time and hides the real error (contract R14).
+// only wastes time and hides the real error.
 #pragma once
 
 #include <chrono>

@@ -207,7 +207,7 @@ VYZ_TEST(integration_engine_copies_an_archive_unchanged) {
 // each adapter resolves a plan whose shape the engine can run — a pinned image,
 // a build context inside the project, and at least one output with an explicit
 // filename. The real Docker build for each toolchain is the operator's opt-in
-// acceptance test (contract §9); what must hold for every adapter, always, is
+// acceptance test; what must hold for every adapter, always, is
 // that the plan is well-formed.
 // ---------------------------------------------------------------------------
 

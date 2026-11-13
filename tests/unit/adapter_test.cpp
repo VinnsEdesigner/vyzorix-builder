@@ -246,7 +246,7 @@ VYZ_TEST(adapter_webroot_build_cmd_reaches_the_plan) {
 }
 
 VYZ_TEST(adapter_carries_the_entrypoint_onto_the_plan) {
-    // The engine asserts the entrypoint exists in the artifact (contract R20), so
+    // The engine asserts the entrypoint exists in the artifact, so
     // the adapter must put the recipe's `cmd` on the plan. A dropped cmd would
     // silently disable that assertion.
     auto catalog = plan::adapter::built_in_catalog();
@@ -271,7 +271,7 @@ VYZ_TEST(adapter_platform_only_on_the_escape_hatch) {
     // A first-class adapter cross-compiles natively on the host, so it must NOT
     // set --platform: forcing the target platform would demand emulation and
     // break the build (a real failure seen on an x86_64 host). The escape hatch
-    // owns its build and is the one place a platform is set (contract R9).
+    // owns its build and is the one place a platform is set.
     auto catalog = plan::adapter::built_in_catalog();
     auto target = domain::resolve_target("arm64-v8a", "bookworm");
     if (!target.has_value()) return;

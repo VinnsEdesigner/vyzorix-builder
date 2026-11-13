@@ -19,7 +19,7 @@ inline void info(const std::string& m) { log(Level::Info, m); }
 inline void log_error(const std::string& m) { log(Level::Error, m); }
 
 // redact scrubs anything that looks like a credential or a signed URL before it
-// reaches stderr (contract R19): an Authorization header value, a bearer/basic
+// reaches stderr: an Authorization header value, a bearer/basic
 // token, a common token prefix, a `?token=`/`?sig=`/`?X-Amz-Signature=` query
 // parameter, and a `user:pass@host` userinfo segment. It is applied to every
 // log line, so a caller cannot forget it.

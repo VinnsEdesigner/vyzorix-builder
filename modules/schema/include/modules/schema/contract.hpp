@@ -44,14 +44,14 @@ struct BuildRequest {
     std::string record_backend;              // for the composite backend: the provenance store
     std::vector<PublishArtifact> artifacts;  // for `publish`; empty for `build`
     bool dry_run = false;
-    // Build limits (contract R2/R4/R5). Zero/empty means "no bound".
+    // Build limits. Zero/empty means "no bound".
     int timeout_seconds = 0;
     std::string memory;   // e.g. "4g"
     std::string cpus;     // e.g. "2"
     int pids_limit = 0;
-    bool pull = false;    // docker build --pull (contract R10)
+    bool pull = false;    // docker build --pull
     long long max_artifact_bytes = 0;  // >0 -> a size ceiling on the artifact (R5)
-    // Build-time secret ids (contract R18). Each names an environment variable on
+    // Build-time secret ids. Each names an environment variable on
     // the builder; the value is read there and passed as a BuildKit --secret, so
     // it never appears in argv, in an image layer, or in a log.
     std::vector<std::string> secret_ids;
@@ -74,7 +74,7 @@ struct BuiltArtifact {
 
 // encode_result writes the result JSON, the only thing the builder writes to
 // stdout (its logs go to stderr). `builder_version` is recorded so the artifact's
-// provenance says which builder produced it (contract R12).
+// provenance says which builder produced it.
 [[nodiscard]] std::string encode_result(const std::vector<BuiltArtifact>& artifacts,
                                         const std::string& builder_version);
 

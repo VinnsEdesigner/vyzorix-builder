@@ -4,7 +4,7 @@
 // the long operations (a poll loop over a child process) check the flag and abort,
 // which lets the normal unwinding run its cleanup (removing the container and
 // image a build created). This is what makes the builder cancellable without
-// leaving a container behind (contract R3).
+// leaving a container behind.
 #pragma once
 
 namespace vyzorix::okfw {

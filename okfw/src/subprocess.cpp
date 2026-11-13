@@ -205,7 +205,7 @@ Result<ProcessOutput> run_with_timeout(const std::vector<std::string>& argv,
 
     if (cancelled) {
         // Terminate the child and reap it, so a cancelled build leaves no
-        // orphan process (contract R3).
+        // orphan process.
         if (out_open) close(out_pipe[0]);
         if (err_open) close(err_pipe[0]);
         ::kill(pid, SIGTERM);

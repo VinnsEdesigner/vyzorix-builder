@@ -144,7 +144,7 @@ VYZ_TEST(contract_decodes_a_request_and_encodes_a_result) {
     CHECK(arr != nullptr);
     CHECK_EQ(arr->as_array()->size(), static_cast<size_t>(1));
     CHECK_EQ((*arr->as_array())[0].find("sha256")->as_string(), "abc");
-    // The builder records its own version in the result (contract R12), so the
+    // The builder records its own version in the result, so the
     // artifact's provenance says which builder produced it.
     const auto* bv = back.value().find("builderVersion");
     CHECK(bv != nullptr);
@@ -218,7 +218,7 @@ VYZ_TEST(recipe_reads_the_build_command) {
 
 VYZ_TEST(recipe_reads_the_build_limits) {
     // The limits object carries the build's resource caps and its timeout
-    // (contract R2/R4). An absent object means no bound, which is the caller's
+    //. An absent object means no bound, which is the caller's
     // explicit choice.
     const char* req = R"({
       "recipe": "[build]\nversion = \"v1\"\nabi = [\"arm64-v8a\"]\n\n[[artifact]]\napp = \"a\"\nname = \"b\"\nlang = \"golang\"\n",
@@ -253,7 +253,7 @@ VYZ_TEST(recipe_defaults_limits_to_no_bound) {
 
 VYZ_TEST(recipe_reads_build_secret_ids) {
     // Build secrets are named by id; the value lives in the builder's environment
-    // and never in the request (contract R18).
+    // and never in the request.
     const char* req = R"({
       "recipe": "[build]\nversion = \"v1\"\nabi = [\"arm64-v8a\"]\n\n[[artifact]]\napp = \"a\"\nname = \"b\"\nlang = \"golang\"\n",
       "projectDir": "/tmp/x",
